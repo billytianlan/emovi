@@ -1,0 +1,6 @@
+<% if @guess.correct %>
+  $('.guess-form-<%= @guess.comment_id %>').addClass('hide')
+  $('.comment-<%= @guess.comment_id %>').append("<button class='animated fadeIn'>Correct</button>")
+<% else %>
+  $('.comment-<%= @guess.comment_id %>').append("<button class='animated fadeIn'>Incorrect Try Again</button>")
+<% end %>

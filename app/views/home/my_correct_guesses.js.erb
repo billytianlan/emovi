@@ -1,0 +1,7 @@
+<% if @comments.present? %>
+  var container = $('.emovi-list-partial');
+  container.replaceWith('<%= escape_javascript render "comments/list", comments: @comments %>');
+<% else %>
+  var container = $('.emovi-list-partial');
+  container.prepend('<h1>No Correct Guesses</h1>');
+<% end %>

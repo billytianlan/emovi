@@ -1,0 +1,35 @@
+<section class="hero">
+  <div class="row intro">
+    <div class="medium-centered medium-12 columns">
+      <h1><strong>Emovi</strong></h1>
+    </div>
+  </div>
+  <% if !logged_in? %>
+    <div class="registration-buttons medium-4 small-12 small-centered columns">
+      <div class="small-6 columns">
+        <%= link_to new_user_path do %>
+          <button class="expand radius">Sign Up</button>
+        <% end %>
+      </div>
+      <div class="small-6 columns">
+        <%= link_to new_session_path do %>
+          <button class="expand radius">Sign In</button>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<div class="row">
+  <div class="small-9 small-centered columns">
+    <h1><%= @user.username %></h1>
+    <h1>Sort:</h1>
+    <%= link_to user_new_posts_path(params: {id: @user.id}), remote: true do %>
+      <button class="tiny radius">New</button>
+    <% end %>
+    <%= link_to user_top_posts_path(params: {id: @user.id}), remote: true do %>
+      <button class="tiny radius">Top</button>
+    <% end %>
+  </div>
+  <%= render 'comments/list', comments: @comments, guess: @guess  %>
+</div>

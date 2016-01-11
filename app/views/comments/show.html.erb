@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="small-12 small-centered text-center">
+    <h1 class="text-centered"><%= @movie.title %></h1>
+    <article class="comment-box">
+      <div class="comment-<%= @comment.id %>">
+        <%= render 'comments/upvote_button', comment: @comment %>
+        <h1 class="comment-body"><%= @comment.body %></h1>
+        <%= link_to user_path(@comment.user) do %>
+          <span class="comment-user"><i class="fa fa-user"></i> <%= @comment.user.username %></span>
+        <% end %>
+        <div class="correct-incorrect-scores">
+          <span class="correct-guesses"><%= @comment.correct_guesses %> <i class="fa fa-check"></i></span> |
+          <span class="incorrect-guesses"><%= @comment.incorrect_guesses %> <i class="fa fa-close"></i></span>
+        </div>
+        <% if logged_in? && current_user != @comment.user %>
+          <% if !@correct_guess %>
+            <%= form_for guess, remote: true, html: {class: "guess-form-#{@comment.id}"} do |f| %>
+              <%= f.text_field :body, :placeholder  =>  "Guess The Movie" %>
+              <%= f.hidden_field :user_id, :value => current_user.id %>
+              <%= f.hidden_field :comment_id, :value => @comment.id %>
+              <%= f.button :submit, data: { disable_with: "Submitting..." }, class: "radius" %>
+            <% end %>
+          <% else %>
+            <button>Correct</button>
+          <% end %>
+        <% end %>
+      </div>
+    </article>
+  </div>
+</div>

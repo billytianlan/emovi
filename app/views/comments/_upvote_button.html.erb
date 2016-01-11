@@ -1,0 +1,26 @@
+<div class='upvote-button-partial-<%= comment.id %>'>
+  <% if logged_in? %>
+    <% unless comment.find_votes_for(:voter => current_user).present? %>
+      <%= link_to upvote_path(params: { c_id: comment.id, u_id: current_user.id }), remote: true do %>
+        <span>
+          <i class="fa fa-arrow-circle-up fa-3x animated fadeIn"></i>
+          <%= comment.get_upvotes.size %>
+        </span>
+      <% end %>
+    <% else %>
+      <%= link_to upvote_path(params: { c_id: comment.id, u_id: current_user.id }), remote: true do %>
+        <span>
+          <i class="fa fa-arrow-circle-up fa-3x animated fadeIn" style="color:gold;"></i>
+          <%= comment.get_upvotes.size %>
+        </span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= link_to new_user_path do %>
+      <span>
+        <i class="fa fa-arrow-circle-up fa-3x"></i>
+        <%= comment.get_upvotes.size %>
+      </span>
+    <% end %>
+  <% end %>
+</div>

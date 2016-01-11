@@ -1,0 +1,34 @@
+<div class="emovi-list-partial animated fadeIn">
+  <% comments.each do |c|  %>
+    <div class="small-9 columns small-centered">
+      <article class="comment-box">
+        <div class="comment-<%= c.id %>">
+          <%= render 'comments/upvote_button', comment: c %>
+          <%= link_to comment_path(c) do %>
+            <h1 class="comment-body"><%= c.body %></h1>
+          <% end %>
+          <%= link_to user_path(c.user) do %>
+            <span class="comment-user"><i class="fa fa-user"></i> <%= c.user.username %></span>
+          <% end %>
+          <div class="correct-incorrect-scores">
+            <span class="correct-guesses"><%= c.correct_guesses %> <i class="fa fa-check"></i></span> |
+            <span class="incorrect-guesses"><%= c.incorrect_guesses %> <i class="fa fa-close"></i></span>
+          </div>
+          <% if logged_in? && current_user != c.user %>
+            <% if !@correct_guess %>
+              <%= form_for guess, remote: true, html: {class: "guess-form-#{c.id}"} do |f| %>
+                <%= f.text_field :body, :placeholder  =>  "Guess The Movie" %>
+                <%= f.hidden_field :user_id, :value => current_user.id %>
+                <%= f.hidden_field :comment_id, :value => c.id %>
+                <%= f.button :submit, data: { disable_with: "Submitting..." }, class: "radius" %>
+              <% end %>
+            <% else %>
+              <button>Correct</button>
+            <% end %>
+          <% end %>
+        </div>
+      </article>
+    </div>
+    <hr>
+  <% end %>
+</div>

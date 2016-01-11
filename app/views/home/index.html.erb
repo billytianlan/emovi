@@ -1,0 +1,53 @@
+<section class="hero">
+  <div class="row intro">
+    <div class="medium-centered medium-12 columns">
+      <h1><strong>Emovi</strong></h1>
+    </div>
+  </div>
+  <% if !logged_in? %>
+    <div class="registration-buttons medium-4 small-12 small-centered columns">
+      <div class="small-6 columns">
+        <%= link_to new_user_path do %>
+          <button class="expand radius">Sign Up</button>
+        <% end %>
+      </div>
+      <div class="small-6 columns">
+        <%= link_to new_session_path do %>
+          <button class="expand radius">Sign In</button>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</section>
+
+<div class="row">
+  <div class="small-9 small-centered columns">
+    <h1>Movies</h1><%= link_to "More Movies", more_movies_path, remote: true %>
+    <%= render 'movies/button_list', movies: @movies %>
+    <h1>Sort:</h1>
+    <%= link_to new_posts_path, remote: true do %>
+      <button class="tiny radius">New</button>
+    <% end %>
+    <%= link_to top_posts_path, remote: true do %>
+      <button class="tiny radius">Top</button>
+    <% end %>
+    <% if logged_in? %>
+      <%= link_to my_posts_path(params: { u_id: current_user.id }), remote: true do %>
+        <button class="tiny radius">My Posts</button>
+      <% end %>
+      <%= link_to my_correct_guesses_path(params: { u_id: current_user.id }), remote: true do %>
+        <button class="tiny radius">Previously Guessed</button>
+      <% end %>
+    <% end %>
+  </div>
+  <%= render 'comments/list', comments: @comments, guess: @guess  %>
+
+</div>
+
+<div id="movieListModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <% @movies.each do |movie| %>
+    <h2 id="modalTitle"><%= movie.title %></h2>
+  <% end %>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+

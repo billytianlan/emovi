@@ -1,0 +1,21 @@
+<div class="button-list animated fadeIn">
+  <% @movies.each do |movie| %>
+    <div id="button-form-<%= movie.id %>">
+      <div><button class="tiny radius movie-button" id="movie-<%= movie.id %>"><%= movie.title %></button></div>
+      <% if logged_in? %>
+        <div class="hide" id="movie-comment-<%= movie.id %>">
+          <% new_comment = Comment.build_from(movie, current_user.id, "") %>
+          <small class=""><%= truncate new_comment.user.username, length: 15  %></small>
+          <div class="comment-form">
+            <%= form_for new_comment, remote: true do |f| %>
+              <%= f.text_area :body, :maxlength => 140, :rows => 3, :label => false,  :placeholder  =>  "Enter Emoji's Here" %>
+              <%= f.hidden_field :commentable_id, :value => new_comment.commentable_id %>
+              <%= f.hidden_field :commentable_type, :value => new_comment.commentable_type %>
+              <%= f.button :submit, data: { disable_with: "Submitting..." } %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

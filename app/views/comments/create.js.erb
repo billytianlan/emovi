@@ -1,0 +1,3 @@
+$('#button-form-<%= @comment.commentable_id %>').addClass('anmited fadeOut hide');
+var container = $('.emovi-list-partial');
+container.replaceWith('<%= escape_javascript render "comments/list", comments: @comments, guess: @guess %>');

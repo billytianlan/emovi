@@ -1,0 +1,3 @@
+var container = $('.button-list')
+container.replaceWith('<%= escape_javascript render 'movies/button_list', movies: @movies %>');
+$(document).foundation();

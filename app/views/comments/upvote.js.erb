@@ -1,0 +1,2 @@
+var container = $('.upvote-button-partial-<%= @comment.id %>');
+container.replaceWith('<%= escape_javascript render "comments/upvote_button", comment: @comment %>');
